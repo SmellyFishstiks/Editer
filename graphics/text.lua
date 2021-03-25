@@ -36,7 +36,7 @@ for i=0,127 do
  font[i]=newChar(i)
 end
 
-unicodeIDs={226,206 }
+unicodeIDs={226,206,240 }
 for i=1, #unicodeIDs do
  font[ unicodeIDs[i] ]=newUnicode(i-1)
 end
@@ -48,15 +48,26 @@ end
 
 
 textCursor={0,0}
-textDrawState="normal"--"italic"
-function text(str,x,y)
+function text(str,x,y,mode,ifShow,ifShake)
  str=tostring(str)
  str=utf8.dump(str)
+ 
+ 
+ 
+ mode=mode or "normal"
+ if ifShow==nil then
+  ifShow=true
+ end
  
  textCursor[1]=x or textCursor[1]
  textCursor[2]=y or textCursor[2]
  
  for i=1,#str do
+  
+  local y=0
+  if ifShake then
+   y=abs( sin( (i%2+(t/10)) ))
+  end
   
   c=string.byte(str[i])
   if (c>127 or c<0) and not unicodeCheck(c) then c=63 end
@@ -66,7 +77,7 @@ function text(str,x,y)
     love.graphics.clear()
     love.graphics.scale(2)
     local r=0
-    if textDrawState=="italic" then r=0.075 end
+    if mode=="italic" then r=0.075 end
     
     local sheet,b=fontSheet,0
     if c>127 then sheet,b=unicodeSheet,4 end
@@ -78,12 +89,13 @@ function text(str,x,y)
    end)
   love.graphics.pop()
   
-  love.graphics.draw(fontCanvas, textCursor[1]-6, textCursor[2]-6)
-  
+  if (ifShow and not showCheck(c) ) or not ifShow then
+   love.graphics.draw(fontCanvas, textCursor[1]-6, textCursor[2]-6+y)
+  end
   
   textCursor[1]=textCursor[1]+6
   if c==10 then
-   textCursor[1]=0
+   textCursor[1]=x or 0
    textCursor[2]=textCursor[2]+8
   end
   
@@ -93,6 +105,14 @@ function text(str,x,y)
 end
 
 
+hideChars={10,32}
+function showCheck(c)
+ for i=1,#hideChars do
+  if hideChars[i]==c then return true end
+ end
+ 
+ return false
+end
 
 
 function getSize(str,bonus)
@@ -128,6 +148,6 @@ function utf8.dump(str)
 end
 
 
-
-
-
+--[[
+ Ω ☆ 🍎
+]]

@@ -38,5 +38,5 @@ function resetWindow(width, height)
  local _,_,f=love.window.getMode()
  local x,y=f.x,f.y
  love.window.setMode(width, height, {x=x,y=y} )
-
+ 
 end

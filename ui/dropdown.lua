@@ -3,6 +3,9 @@
 
 function dropDownWindow(items,x,y)
  items=items or {{"rror","nil",1}}
+ 
+ if type(x)=="table" then y=x[4] or dropDownPos x=x[1](x[2])+x[3] end
+ 
  x=x or 0
  y=y or bannerMargin
  
@@ -30,11 +33,32 @@ function dropDownWindow(items,x,y)
  
  
  -- make sure it's in bounds
- local wx=getWindowSize()
- wx=floor(wx)
+ local wx=getWindowSize()-.5
+ 
  --local dx=-width*3--width*(r^2)-width*r
  if x+width>wx*2 then x=wx*2-width end
  if x<0 then x=0 end
+ 
+ 
+ 
+ -- input
+ local n=0
+ if mouse.pos[1]>x and mouse.pos[1]<x+width and
+    mouse.pos[2]>y and mouse.pos[2]<y+height then
+  
+  if y<bannerMargin and state==0 then goto _ end
+  
+  mouse.hover=true mouseAnimation()
+  n=floor( (mouse.pos[2]-y-2)/10 +1 )
+  n=min(#items, max(1,n))
+  
+  if mouse.click[1] then
+   items[n][4]()
+  end
+  ::_::
+ end
+ 
+ 
  
  for i=1,4 do
   setColor("000005",1/(10+(i-1)*4))
@@ -48,16 +72,36 @@ function dropDownWindow(items,x,y)
  setColor("ffffff")
  
  for i=1,#items do
-  sprite(items[i][3],x+2,y+i*hr-hr+3)
+  local g=0
+  if n==i then g=1 end
+  if items[i][3] then
+   sprite(items[i][3], x+2+g, y+i*hr-hr+3)
+  end
+  
   local str=items[i][1]
   if items[i][2]~="" then str=str.." ("..items[i][2]..")" end
-  text(str,x+12,y+i*hr-hr+5)
+  
+  text(str, x+12+g, y+i*hr-hr+5,"normal",true,items[i][5])
  end
  
- --love.graphics.rectangle("fill",x,y+height,width*r,1)
- 
- --setColor("000005",.1)
- --love.graphics.rectangle("fill",x,y+height+1,width*r,2)
- 
- setColor("ffffff")
 end
+
+
+
+
+function DropDownFunc()
+ 
+ if dropDownPos~=bannerMargin then 
+  dropDownPos=dropDownPos+2
+ end
+ dropDownMenu()
+end
+
+
+
+
+
+
+
+
+

@@ -3,6 +3,8 @@
 function love.load()
  require("require")
  
+ initUIBoxes()
+ 
  screen=love.graphics.newCanvas(window.ogx, window.ogy)
 end
 
@@ -10,10 +12,11 @@ end
 
 
 t=0
+state=0
 function love.update()
  t=t+1
  
- 
+ inputMain()
  updateScreen()
 end
 
@@ -24,17 +27,15 @@ function love.draw()
   love.graphics.scale(1/2)
    love.graphics.setCanvas(screen)
    
-   love.graphics.clear()
-   
    pageBackground()
-   
-   dropDownWindow({ {"New file","Cmd N",6},{"Syntax","",11},{"Word Wrap","",10} },32,24)
-   
-   
-   
-   --text("\16\16\16\16\17\17\16\16\16\16\n\16\16\16\17\16\16\17\16\16\16\n\16\17\17\16\16\16\16\17\17\16\n\17\16\16\16\16\16\16\16\16\17\n\16\17\17\16\16\16\16\17\17\16\n\16\16\17\16\16\16\16\17\16\16\n\16\17\16\16\17\16\17\16\17\16\n\16\17\16\16\16\16\16\17\17\16\n\16\17\16\16\16\16\17\17\16\17\n\16\17\17\16\16\16\17\16\16\17\n\16\17\16\17\17\17\17\17\17\16\n\16\17\17\16\17\17\16\17\17\16\n",nil,16)
-   
+   --text("Apple 🍎",2,14,"italic")
+   --text("\16\16\16\16\17\17\16\16\16\16\n\16\16\16\17\16\16\17\16\16\16\n\16\17\17\16\16\16\16\17\17\16\n\17\16\16\16\16\16\16\16\16\17\n\16\17\17\16\16\16\16\17\17\16\n\16\16\17\16\16\16\16\17\16\16\n\16\17\16\16\17\16\17\16\17\16\n\16\17\16\16\16\16\16\17\17\16\n\16\17\16\16\16\16\17\17\16\17\n\16\17\17\16\16\16\17\16\16\17\n\16\17\16\17\17\17\17\17\17\16\n\16\17\17\16\17\17\16\17\17\16\n",3,16)
+   if doDropDown then DropDownFunc() end
    mainBanners()
+   
+   UIBoxMain()
+   
+   if doPrompt then promptScreen() end 
    
   love.graphics.setCanvas()
  love.graphics.pop()

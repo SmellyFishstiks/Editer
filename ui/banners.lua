@@ -17,6 +17,9 @@ bannerMargin=12
 
 
 function pageBackground()
+ 
+ --love.graphics.clear()
+ 
  local b=bannerMargin
  
  local x,y=bannerGetStretch()
@@ -39,6 +42,12 @@ function mainBanners()
  setColor(pageIDTable[pageID][1])
  love.graphics.rectangle("fill",0,0,(window.ogx+x+1)*2,bannerMargin)
  love.graphics.rectangle("fill",0,144+y*2-bannerMargin,(window.ogx+x+1)*2,bannerMargin)
+ 
+ for i=1,2 do
+  setColor("000005",1/(i*8+15))
+  love.graphics.line(0, bannerMargin+i, (window.ogx+x+1)*2, bannerMargin+i)
+ end
+ 
  setColor("ffffff")
  
  for i=0,4 do
@@ -49,7 +58,9 @@ function mainBanners()
  if x<8 then r,b=10,0 end
  if x<-12 then r,b=9,-8 end
  for i=1,#bannerIcons do
-  sprite(bannerIcons[i][1]+5, 74+i*r+x*2-b, 2)
+  local y=0
+  if doDropDown==i then y=1 end
+  sprite(bannerIcons[i][1]+8, 74+i*r+x*2-b, 2+y)
  end
  
 end

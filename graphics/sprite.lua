@@ -22,17 +22,23 @@ spriteTable={
  newSprite(24,0),
  newSprite(32,0),
  
- -- icons
+ -- prompt
+ newSprite(40,0),
+ newSprite(48,0),
+ 
+ -- empty
+ newSprite(56,0),
+ 
+ -- banner icons
  newSprite(0,8),
  newSprite(8,8),
  newSprite(16,8),
  newSprite(24,8),
  
- -- menu icons
+ -- banner's menu icons
  newSprite(32,8),
+ newSprite(40,8),
+ newSprite(48,8),
+ newSprite(56,8)
  
- -- (syntax icons)
- newSprite(0,16),
- newSprite(8,16),
- newSprite(16,16)
 }
