@@ -72,7 +72,7 @@ function UIBoxMain()
  
  if f then mouse.hover=true else
   
-  if mouse.click[1] then doDropDown=nil end
+  if mouse.click[1] then dropDownPos=nil doDropDown=nil end
   mouse.hover=false
  end
 end

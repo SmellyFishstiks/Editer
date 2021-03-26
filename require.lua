@@ -1,9 +1,10 @@
 local path=""
 
-
+require("tablehelp")
 require("shortcuts")
 
 utf8 = require("utf8")
+
 
 path="lang/"
 l=require(path.."english")
@@ -14,9 +15,12 @@ require(path.."text")
 require(path.."sprite")
 require(path.."color")
 
+
 path="ui/"
 require(path.."window")
 require(path.."banners")
+require(path.."banner_info")
+
 require(path.."dropdown")
 
 path=path.."input/"
@@ -26,3 +30,7 @@ require(path.."box")
 require(path.."banner_box")
 
 require(path.."prompt")
+
+path=path.."write/"
+require(path.."type")
+require(path.."draw")

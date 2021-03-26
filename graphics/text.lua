@@ -2,6 +2,7 @@
 fontSheet=love.graphics.newImage("fontsheet.png")
 
 font={}
+fontDummyCanvas=love.graphics.newCanvas(12,12)
 fontCanvas=love.graphics.newCanvas(12,12)
 
 function newChar(i)
@@ -23,7 +24,6 @@ end
 
 
 function unicodeCheck(i)
- 
  for j=1,#unicodeIDs do
   if unicodeIDs[j]==i then return true end
  end
@@ -36,7 +36,17 @@ for i=0,127 do
  font[i]=newChar(i)
 end
 
-unicodeIDs={226,206,240 }
+unicodeIDs={
+ -- arrows
+ 8592,8593,8594,8595,
+ -- omega
+ 9734,
+ -- star
+ 937,
+ -- apple
+ 127822
+}
+
 for i=1, #unicodeIDs do
  font[ unicodeIDs[i] ]=newUnicode(i-1)
 end
@@ -44,20 +54,34 @@ end
 
 
 
+function textBubble(str,amount)
+ 
+ local str=tostring(str)
+ for i=1,amount-#str do
+  str="0"..str
+ end
+ return str
+ 
+end
+
+
+function getChar(v,i)
+
+ return utf8.dump(tostring(v))[i]
+
+end
 
 
 
-textCursor={0,0}
-function text(str,x,y,mode,ifShow,ifShake)
+
+textCursor={0,0,0,0}
+function text(str,x,y,mode,ifShow,ifShake,ifWrap)
  str=tostring(str)
  str=utf8.dump(str)
  
  
  
  mode=mode or "normal"
- if ifShow==nil then
-  ifShow=true
- end
  
  textCursor[1]=x or textCursor[1]
  textCursor[2]=y or textCursor[2]
@@ -69,10 +93,24 @@ function text(str,x,y,mode,ifShow,ifShake)
    y=abs( sin( (i%2+(t/10)) ))
   end
   
-  c=string.byte(str[i])
+  
+  
+  c=utf8.ord(str[i])--string.byte(str[i])
   if (c>127 or c<0) and not unicodeCheck(c) then c=63 end
   
+  -- draw to canvas
   love.graphics.push()
+   fontDummyCanvas:renderTo(function()
+    love.graphics.clear()
+    love.graphics.scale(2)
+    local sheet,b=fontSheet,0
+    if c>127 then sheet,b=unicodeSheet,4 end
+    
+    love.graphics.draw(sheet, font[c], 0,0)
+   end)
+  love.graphics.pop()
+   
+   love.graphics.push()
    fontCanvas:renderTo(function()
     love.graphics.clear()
     love.graphics.scale(2)
@@ -82,19 +120,22 @@ function text(str,x,y,mode,ifShow,ifShake)
     local sheet,b=fontSheet,0
     if c>127 then sheet,b=unicodeSheet,4 end
     
-    love.graphics.draw(sheet, font[c], 6-b,6,r)
+    love.graphics.draw(fontDummyCanvas, 6-b,6,r)
     
     if c>127 then textCursor[1]=textCursor[1]+3 end
     
    end)
   love.graphics.pop()
   
-  if (ifShow and not showCheck(c) ) or not ifShow then
-   love.graphics.draw(fontCanvas, textCursor[1]-6, textCursor[2]-6+y)
+  if not showCheck(c) or ifShow then
+   love.graphics.draw(fontCanvas, textCursor[1]-6+textCursor[3], textCursor[2]-6+y+textCursor[4])
   end
   
   textCursor[1]=textCursor[1]+6
-  if c==10 then
+  
+  
+  local xd=getWindowSize()*2-12
+  if c==10 or (ifWrap and textCursor[1]>xd) then
    textCursor[1]=x or 0
    textCursor[2]=textCursor[2]+8
   end
@@ -105,7 +146,7 @@ function text(str,x,y,mode,ifShow,ifShake)
 end
 
 
-hideChars={10,32}
+hideChars={9,10,32}
 function showCheck(c)
  for i=1,#hideChars do
   if hideChars[i]==c then return true end
@@ -148,6 +189,33 @@ function utf8.dump(str)
 end
 
 
+function utf8.ord(c)
+ local o=utf8.offset(c,1)
+ local c=utf8.codepoint(c, o, o)
+ return c
+end
+
+
+--[[
+local test={"Ω","☆","🍎"}
+for k=1,#test do
+ 
+ local t={}
+ local str=test[k]
+ for i=1,#str do
+  local o=utf8.offset(str,i)-i
+  if i+o>#str then break end
+  
+  local c=utf8.codepoint(str, i+o, i+o)
+  t[#t+1]=c
+  
+ end
+ 
+ for i=1,#t do
+  print("value: "..t[i])
+ end
+end
+-- ]]
 --[[
  Ω ☆ 🍎
 ]]

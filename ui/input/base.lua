@@ -4,7 +4,6 @@ function inputMain()
  trackBoard()
  trackMouse()
  
- mouseAnimation()
 end
 
 
@@ -37,6 +36,28 @@ function love.keyreleased(key)
 end
 
 
+function shiftCheck()
+ if keys["capslock"] or keys["lshift"] or keys["rshift"] then
+  return true
+ end
+ return false
+end
+
+function altCheck()
+ if keys["lalt"] or keys["ralt"] then
+  return true
+ end
+ return false
+end
+
+function cmdCheck()
+ if keys["lgui"] or keys["rgui"] then
+  return true
+ end
+ return false
+end
+
+
 
 
 mouse={
@@ -46,12 +67,15 @@ mouse={
  wheelCoolDown=0,
  click={},
  
- hover=false
+ hover=false,
+ action=false
 }
 
 function trackMouse()
  
  mouse.pos[1], mouse.pos[2]=getMousePos()
+ 
+ mouse.action=false
  
  if mouse.coolDown~=0 then
   mouse.coolDown=mouse.coolDown-1
@@ -97,13 +121,14 @@ end
 function mouseAnimation()
  local ani="arrow"
  
- 
- 
  local x,y=bannerGetStretch()
  y=144+y*2-bannerMargin
- 
- if mouse.pos[2]>bannerMargin and mouse.pos[2]<y and not doDropDown then 
+ if mouse.pos[2]>bannerMargin and mouse.pos[2]<y and 
+    state==0 and not mouse.hover and not mouse.action then
   ani="ibeam"
+  if mouse.click[1] then doWrite=true end
+ else
+  if mouse.click[1] then doWrite=false end
  end
  
  if mouse.hover then ani="hand" end

@@ -53,6 +53,7 @@ function dropDownWindow(items,x,y)
   n=min(#items, max(1,n))
   
   if mouse.click[1] then
+   mouse.action=true
    items[n][4]()
   end
   ::_::
@@ -81,7 +82,7 @@ function dropDownWindow(items,x,y)
   local str=items[i][1]
   if items[i][2]~="" then str=str.." ("..items[i][2]..")" end
   
-  text(str, x+12+g, y+i*hr-hr+5,"normal",true,items[i][5])
+  text(str, x+12+g, y+i*hr-hr+5,"normal",false,items[i][5])
  end
  
 end

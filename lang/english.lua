@@ -1,15 +1,16 @@
 english={
  
- syntax="Syntax",
- wordWrap="Word Wrap",
- showSpacing="Show spacing",
+ syntax         ="Syntax",
+ wordWrap       ="Word wrap",
+ showSpacing    ="Show spacing",
+ cursorAnimation="Cursor ani",
  
- runProject="Run project",
+ runProject    ="Run project",
  toggleDebugger="Toggle debugger",
  
  openFolder="Open folder",
- save="Save",
- newFile="New file",
+ save      ="Save",
+ newFile   ="New file",
  
  leave="Leave",
  
@@ -17,7 +18,7 @@ english={
               "Unsaved files will",
               "be LOST!"},
  promptYes="Yes",
- promptNo="No"
+ promptNo ="No"
 }
 
 return english

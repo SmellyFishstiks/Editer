@@ -73,3 +73,4 @@ function bannerGetStretch()
  local y=wy-window.ogy
  return x,y
 end
+

@@ -5,7 +5,8 @@ function UIBox_BannerFunc(box)
   dropDownWindow(
    { {l.syntax,"",syntaxIcons[syntaxUsed],banner_Write_Syntax},
      {l.wordWrap,"",14,banner_Write_WordWrap},
-     {l.showSpacing,"",14,banner_Write_ShowSpacing}
+     {l.showSpacing,"",14,banner_Write_ShowSpacing},
+     {l.cursorAnimation,"",9,banner_CursorAnimation}
    },
    {UIBox_Banner_GetStretch,box,74})
   end),
@@ -61,7 +62,7 @@ end
 
 
 syntaxUsed=0
-syntaxIcons={[0]=13,16}--{[0]=12,13,14,15}
+syntaxIcons={[0]=13,16}
 function banner_Write_Syntax()
  
  syntaxUsed=(syntaxUsed+1)%(#syntaxIcons+1)
@@ -72,26 +73,32 @@ end
 doWordWrap=false
 function banner_Write_WordWrap()
  doWordWrap=not doWordWrap
+ mouse.click[1]=false
 end
 
 doShowSpacing=false
 function banner_Write_ShowSpacing()
  doShowSpacing=not doShowSpacing
+ mouse.click[1]=false
 end
 
-
+function banner_CursorAnimation()
+ typeTCursor=(typeTCursor%#typeAnimation)+1
+ mouse.click[1]=false
+end
 
 
 doPrompt=false
 function banner_Quit()
  state=1
  doPrompt=true
+ doWrite=false
  PromptMenu=(function()
   dropDownWindow(
    { {l.quitProgram[1],"",nil,dummyPromptChoice,true},
      {l.quitProgram[2],"",nil,dummyPromptChoice,true},
      {l.quitProgram[3],"",nil,dummyPromptChoice,true},
-     {l.promptYes,"",6,(function() love.event.quit() end)},
+     {l.promptYes,"",6,(function() doQuit=false love.event.quit() end)},
      {l.promptNo,"",7, (function() doPrompt=false state=0 end)}
    },
    {quitGetStretch,box,-61,bannerMargin+4})

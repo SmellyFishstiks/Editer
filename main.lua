@@ -16,6 +16,7 @@ state=0
 function love.update()
  t=t+1
  
+ if doWrite and state==0 then write() end
  inputMain()
  updateScreen()
 end
@@ -28,10 +29,14 @@ function love.draw()
    love.graphics.setCanvas(screen)
    
    pageBackground()
-   --text("Apple 🍎",2,14,"italic")
-   --text("\16\16\16\16\17\17\16\16\16\16\n\16\16\16\17\16\16\17\16\16\16\n\16\17\17\16\16\16\16\17\17\16\n\17\16\16\16\16\16\16\16\16\17\n\16\17\17\16\16\16\16\17\17\16\n\16\16\17\16\16\16\16\17\16\16\n\16\17\16\16\17\16\17\16\17\16\n\16\17\16\16\16\16\16\17\17\16\n\16\17\16\16\16\16\17\17\16\17\n\16\17\17\16\16\16\17\16\16\17\n\16\17\16\17\17\17\17\17\17\16\n\16\17\17\16\17\17\16\17\17\16\n",3,16)
+   
+   drawText()
+   
    if doDropDown then DropDownFunc() end
    mainBanners()
+   bannerDescript()
+   
+   mouseAnimation()
    
    UIBoxMain()
    
@@ -46,3 +51,8 @@ function love.draw()
 end
 
 
+doQuit=not true
+function love.quit()
+  banner_Quit()
+  return doQuit
+end
