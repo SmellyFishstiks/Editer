@@ -51,6 +51,7 @@ function love.draw()
 end
 
 
+-- wip
 doQuit=not true
 function love.quit()
   banner_Quit()

@@ -134,7 +134,7 @@ function text(str,x,y,mode,ifShow,ifShake,ifWrap)
   textCursor[1]=textCursor[1]+6
   
   
-  local xd=getWindowSize()*2-12
+  local xd=getWindowSize()*2-(lineBannerMargin+6)
   if c==10 or (ifWrap and textCursor[1]>xd) then
    textCursor[1]=x or 0
    textCursor[2]=textCursor[2]+8

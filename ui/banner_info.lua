@@ -25,12 +25,20 @@ end
 
 function bannerDescript_Write()
  local n=#tostring(#textTable)
- return "p"..textBubble(writeCursor,n).."l"..textBubble(#textTable,n)
+ 
+ local l=0
+ for i=1,writeCursor do
+  if textTable[i]=="\10" then
+   l=l+1
+  end
+ end
+ 
+ return "pos "..textBubble(writeCursor,n).."/"..textBubble(#textTable,n).." lin "..l
 end
 
 
 function bannerDescript_DropDown1()
- local names={"txt ","lua "}
- local b1,b2=getChar(doWordWrap,1),getChar(doShowSpacing,1)
- return names[syntaxUsed+1].."wrp_"..b1.." shw_"..b2.." csr"..typeTCursor
+ local names={"txt ","md  ","lua "}
+ local b1,b2,b3=getChar(doWordWrap,1),getChar(doShowSpacing,1),getChar(doLineBannerSlec,1)
+ return names[syntaxUsed+1].."wrp_"..b1.." shw_"..b2.." lin_"..b3--" csr"..typeTCursor
 end

@@ -3,6 +3,7 @@ english={
  syntax         ="Syntax",
  wordWrap       ="Word wrap",
  showSpacing    ="Show spacing",
+ textLine       ="Show lines",
  cursorAnimation="Cursor ani",
  
  runProject    ="Run project",
@@ -17,8 +18,9 @@ english={
  quitProgram={"You want to quit?",
               "Unsaved files will",
               "be LOST!"},
- promptYes="Yes",
- promptNo ="No"
+ promptYes    ="Yes",
+ promptNo     ="No",
+ promptNotSure="Still thinking.."
 }
 
 return english

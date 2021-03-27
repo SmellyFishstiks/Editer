@@ -33,4 +33,5 @@ require(path.."prompt")
 
 path=path.."write/"
 require(path.."type")
+require(path.."arrow")
 require(path.."draw")

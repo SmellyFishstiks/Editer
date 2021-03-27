@@ -25,10 +25,10 @@ function pageBackground()
  local x,y=bannerGetStretch()
  setColor(pageIDTable[pageID][3])
  
- love.graphics.rectangle("fill",0,b,(window.ogx+x+1)*2,144+y*2-b)
+ love.graphics.rectangle("fill",0,b,(window.ogx+x+1)*2,144+y*2-b*2)
  
  local r=16
- for i=1,144+y*2-b do
+ for i=0,144+y*2-b do
   setColor(pageIDTable[pageID][4],floor(i/r)/((144-b+y*2)/r))
   love.graphics.line(0, b+i-1, (window.ogx+x+1)*2, b+i-1)
  end
@@ -43,9 +43,10 @@ function mainBanners()
  love.graphics.rectangle("fill",0,0,(window.ogx+x+1)*2,bannerMargin)
  love.graphics.rectangle("fill",0,144+y*2-bannerMargin,(window.ogx+x+1)*2,bannerMargin)
  
+ local r=#tostring((#textLineMem-1))
  for i=1,2 do
   setColor("000005",1/(i*8+15))
-  love.graphics.line(0, bannerMargin+i, (window.ogx+x+1)*2, bannerMargin+i)
+  love.graphics.line(lineBannerMargin*r, bannerMargin+i, (window.ogx+x+1)*2, bannerMargin+i)
  end
  
  setColor("ffffff")
@@ -64,6 +65,8 @@ function mainBanners()
  end
  
 end
+
+
 
 
 function bannerGetStretch()

@@ -1,6 +1,8 @@
 function drawText()
  
- textCursor={0, bannerMargin+2, 2, 0}
+
+ local r=#tostring((#textLineMem-1))
+ textCursor={0, bannerMargin+2, lineBannerMargin*r+2, 0}
  
  for i=0,#textTable do
   
@@ -13,6 +15,10 @@ function drawText()
  end
  
  textCursor[3]=0
+ 
+ if lineBannerMargin~=0 then
+  drawTextLines()
+ end
 end
 
 
@@ -27,7 +33,7 @@ typeAnimation={
  {[0]='\23','\25','\24','\26'}
 }
 function drawTextCursor()
-
+ 
  typeT=typeT+1
  local a=floor(typeT/10)%(#typeAnimation[typeTCursor]+1)
  
@@ -40,3 +46,67 @@ function drawTextCursor()
  end
 
 end
+
+
+
+
+
+lineBannerMargin=0
+textLineMem={}
+function drawTextLines()
+ 
+ local b=bannerMargin
+ 
+ local d,dx,h,str = 0, 0, 8, ""
+ textLineMem={ {"0",0,8} }
+ 
+ for i=1,#textTable do
+  local a,c=6,textTable[i]
+  if unicodeCheck(c) then a=8 end
+  dx=dx+a
+  
+  if c=='\10' then
+   d,dx,str = d+8, 0, tostring(#textLineMem)
+   
+   textLineMem[#textLineMem+1]={str,d,h}
+   textLineMem[#textLineMem][3]=8
+   h=8
+  end
+  if doWordWrap and dx>getWindowSize()*2-(lineBannerMargin+6) then
+   h,d,dx = h+8, d+8, 0
+   
+   textLineMem[#textLineMem][3]=h
+  end
+  
+ end
+ 
+
+
+ local l=1
+ for i=1,writeCursor do
+  if textTable[i]=="\10" then
+   l=l+1
+  end
+ end
+ 
+ local r=#tostring((#textLineMem-1))
+ local p=0
+ for i=1,#textLineMem do
+  
+  setColor(pageIDTable[pageID][2])
+  
+  if l==i then setColor(pageIDTable[pageID][1]) end
+  
+  local y=textLineMem[i][2]
+  local h=textLineMem[i][3]
+  love.graphics.rectangle("fill", 0,b+y,lineBannerMargin*r,h)
+ end
+ 
+ setColor("ffffff")
+ for i=1,#textLineMem do
+  text(textLineMem[i][1],0,textLineMem[i][2]+2+bannerMargin)
+ end
+end
+
+
+

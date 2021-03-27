@@ -39,6 +39,8 @@ spriteTable={
  newSprite(32,8),
  newSprite(40,8),
  newSprite(48,8),
- newSprite(56,8)
+ newSprite(56,8),
  
+ newSprite(0,16),
+ newSprite(8,16)
 }

@@ -6,7 +6,8 @@ function UIBox_BannerFunc(box)
    { {l.syntax,"",syntaxIcons[syntaxUsed],banner_Write_Syntax},
      {l.wordWrap,"",14,banner_Write_WordWrap},
      {l.showSpacing,"",14,banner_Write_ShowSpacing},
-     {l.cursorAnimation,"",9,banner_CursorAnimation}
+     {l.textLine,"",9,banner_TextLine},
+     {l.cursorAnimation,tostring(typeTCursor),9,banner_CursorAnimation},
    },
    {UIBox_Banner_GetStretch,box,74})
   end),
@@ -62,7 +63,7 @@ end
 
 
 syntaxUsed=0
-syntaxIcons={[0]=13,16}
+syntaxIcons={[0]=13,18,16}
 function banner_Write_Syntax()
  
  syntaxUsed=(syntaxUsed+1)%(#syntaxIcons+1)
@@ -85,6 +86,20 @@ end
 function banner_CursorAnimation()
  typeTCursor=(typeTCursor%#typeAnimation)+1
  mouse.click[1]=false
+ 
+ -- add change to name here.
+end
+
+doLineBannerSlec=false
+function banner_TextLine()
+ doLineBannerSlec=not doLineBannerSlec
+ 
+ if doLineBannerSlec then
+  lineBannerMargin=6
+ else
+  lineBannerMargin=0
+ end
+ mouse.click[1]=false
 end
 
 
@@ -93,13 +108,23 @@ function banner_Quit()
  state=1
  doPrompt=true
  doWrite=false
+ 
+ 
+ local anwsers={l.promptYes,l.promptNo}
+ math.randomseed(os.time())
+ local rng=math.random(1,32)
+ if rng==1 then
+  anwsers[2]=l.promptNotSure
+ end
+
+ 
  PromptMenu=(function()
   dropDownWindow(
    { {l.quitProgram[1],"",nil,dummyPromptChoice,true},
      {l.quitProgram[2],"",nil,dummyPromptChoice,true},
      {l.quitProgram[3],"",nil,dummyPromptChoice,true},
-     {l.promptYes,"",6,(function() doQuit=false love.event.quit() end)},
-     {l.promptNo,"",7, (function() doPrompt=false state=0 end)}
+     {anwsers[1],"",6,(function() doQuit=false love.event.quit() end)},
+     {anwsers[2],"",7, (function() doPrompt=false state=0 end)}
    },
    {quitGetStretch,box,-61,bannerMargin+4})
   end)

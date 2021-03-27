@@ -1,6 +1,8 @@
 
 
+ColorMem=""
 function setColor(hex,aplha)
+ ColorMem=hex
  local c={}
  for i=0,2 do
   c[i]=string.sub(hex,i*2+1,i*2+2)
