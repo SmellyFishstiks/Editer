@@ -68,7 +68,7 @@ function banner_Write_Syntax()
  
  syntaxUsed=(syntaxUsed+1)%(#syntaxIcons+1)
  mouse.click[1]=false
- 
+ writeUpdate=true
 end
 
 doWordWrap=false
@@ -116,7 +116,7 @@ function banner_Quit()
  if rng==1 then
   anwsers[2]=l.promptNotSure
  end
-
+ doDropDown=false
  
  PromptMenu=(function()
   dropDownWindow(

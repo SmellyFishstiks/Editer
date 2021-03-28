@@ -26,7 +26,7 @@ end
 function bannerDescript_Write()
  local n=#tostring(#textTable)
  
- local l=0
+ local l=1
  for i=1,writeCursor do
   if textTable[i]=="\10" then
    l=l+1

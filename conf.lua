@@ -1,6 +1,6 @@
 -- conf file!
 
-version="v5"
+version="v6"
 
 window={
  ogx=64,

@@ -3,6 +3,7 @@
 textTable={}
 writeCursor=0
 typeDeleteTimer=0
+writeUpdate=false
 typeMoveTimer={
  L=0,
  R=0,
@@ -26,6 +27,7 @@ function write()
   if f and writeCursor~=0 then
    textTable=remove_Table(textTable,writeCursor)
    writeCursor=max(writeCursor-1,0)
+   writeUpdate=true
   end
   
   typeDeleteTimer=typeDeleteTimer+1
@@ -56,6 +58,7 @@ function write()
    typeT=0
    writeCursor=writeCursor+1
    textTable=addTo_Table(textTable,writeCursor,i)
+   writeUpdate=true
   end
  end
  
