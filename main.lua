@@ -16,7 +16,10 @@ state=0
 function love.update()
  t=t+1
  
- if doWrite and state==0 then write() end
+ if doWrite and state==0 then
+  write_Cmds()
+  write()
+ end
  inputMain()
  updateScreen()
 end
@@ -51,8 +54,8 @@ function love.draw()
 end
 
 
--- wip
-doQuit=not true
+
+doQuit=true
 function love.quit()
   banner_Quit()
   return doQuit

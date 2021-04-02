@@ -109,7 +109,6 @@ function banner_Quit()
  doPrompt=true
  doWrite=false
  
- 
  local anwsers={l.promptYes,l.promptNo}
  math.randomseed(os.time())
  local rng=math.random(1,32)

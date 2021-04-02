@@ -134,7 +134,8 @@ function text(str,x,y,mode,ifShow,ifShake,ifWrap)
   textCursor[1]=textCursor[1]+6
   
   
-  local xd=getWindowSize()*2-(lineBannerMargin+6)
+  local r=#tostring((#textLineMem))
+  local xd=getWindowSize()*2-(lineBannerMargin*r+6)
   if c==10 or (ifWrap and textCursor[1]>xd) then
    textCursor[1]=x or 0
    textCursor[2]=textCursor[2]+8
@@ -144,7 +145,6 @@ function text(str,x,y,mode,ifShow,ifShake,ifWrap)
  end
  
 end
-
 
 hideChars={9,10,32}
 function showCheck(c)
@@ -218,4 +218,5 @@ end
 -- ]]
 --[[
  Ω ☆ 🍎
+ ↑ ↓ → ←
 ]]

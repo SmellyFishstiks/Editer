@@ -33,6 +33,8 @@ require(path.."prompt")
 
 path=path.."write/"
 require(path.."type")
+require(path.."comand")
 require(path.."arrow")
 require(path.."draw")
 require(path.."syntax")
+require(path.."clipboard")

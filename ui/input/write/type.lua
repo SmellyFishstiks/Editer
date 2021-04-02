@@ -59,6 +59,7 @@ function write()
    writeCursor=writeCursor+1
    textTable=addTo_Table(textTable,writeCursor,i)
    writeUpdate=true
+   
   end
  end
  
