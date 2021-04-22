@@ -22,7 +22,7 @@ function UIBox_BannerFunc(box)
   
   (function()
   dropDownWindow(
-   { {l.openFolder,"",11},
+   { {l.openFolder,"",11,banner_Open_Folder},
      {l.save,"Cmd S",13},
      {l.newFile,"Cmd N",9}
    },

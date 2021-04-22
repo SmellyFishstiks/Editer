@@ -20,6 +20,7 @@ path="ui/"
 require(path.."window")
 require(path.."banners")
 require(path.."banner_info")
+require(path.."banner_file")
 
 require(path.."dropdown")
 
@@ -31,10 +32,17 @@ require(path.."banner_box")
 
 require(path.."prompt")
 
+
 path=path.."write/"
 require(path.."type")
 require(path.."comand")
 require(path.."arrow")
 require(path.."draw")
-require(path.."syntax")
 require(path.."clipboard")
+
+path=path.."syntax/"
+require(path.."main")
+
+
+path="ui/filenav/"
+require(path.."iohelp")

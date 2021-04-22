@@ -1,5 +1,3 @@
-
-
 function bannerDescript()
  
  local str=""
@@ -26,14 +24,14 @@ end
 function bannerDescript_Write()
  local n=#tostring(#textTable)
  
- local l=1
+ local li=1
  for i=1,writeCursor do
   if textTable[i]=="\10" then
-   l=l+1
+   li=li+1
   end
  end
  
- return "pos "..textBubble(writeCursor,n).."/"..textBubble(#textTable,n).." lin "..l
+ return l.cursorPos..textBubble(writeCursor,n).."/"..textBubble(#textTable,n).." "..l.cursorLine..li
 end
 
 

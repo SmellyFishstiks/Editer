@@ -12,9 +12,11 @@ function drawText()
   
   if i~=0 then
    
-   local mode,color=syntaxTable[i][1],syntaxTable[i][2]
+   local mode,color,shake=syntaxTable[i][1],syntaxTable[i][2],nil
+   
+   if mode=="shake" then shake=i mode="normal" end
    setColor(color)
-   text(textTable[i], nil, nil, mode, doShowSpacing, nil, doWordWrap)
+   text(textTable[i], nil, nil, mode, doShowSpacing, shake, doWordWrap)
   end
   
   setColor("ffffff")
@@ -41,7 +43,6 @@ typeAnimation={
  {[0]='_','_','_',' '}
 }
 function drawTextCursor()
- 
  typeT=typeT+1
  local a=floor(typeT/10)%(#typeAnimation[typeTCursor]+1)
  
@@ -50,6 +51,12 @@ function drawTextCursor()
  if typeTLock then typeT=typeT-1 end 
  
  if doWrite then
+  
+  if syntaxTable[writeCursor+1] then
+   setColor(syntaxTable[writeCursor+1][2])
+  else
+   setColor("ffffff")
+  end
   text(typeAnimation[typeTCursor][a])
  end
 

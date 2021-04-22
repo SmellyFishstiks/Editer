@@ -1,12 +1,15 @@
 
 
- floor=math.floor
- ceil=math.ceil
- sin=math.sin
- cos=math.cos
- abs=math.abs
- min=math.min
- max=math.max
- 
- love.graphics.setDefaultFilter("nearest","nearest",1)
- love.graphics.setLineStyle("rough")
+
+local m=math
+
+floor=m.floor
+ceil=m.ceil
+sin=m.sin
+cos=m.cos
+abs=m.abs
+min=m.min
+max=m.max
+
+love.graphics.setDefaultFilter("nearest","nearest",1)
+love.graphics.setLineStyle("rough")

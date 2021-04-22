@@ -90,7 +90,11 @@ function text(str,x,y,mode,ifShow,ifShake,ifWrap)
   
   local y=0
   if ifShake then
-   y=abs( sin( (i%2+(t/10)) ))
+   if type(ifShake)=="number" then
+    y=( sin( (ifShake%2+(t/10)) ))
+   else
+    y=abs( sin( (i%2+(t/10)) ))
+   end
   end
   
   
@@ -195,7 +199,6 @@ function utf8.ord(c)
  return c
 end
 
-
 --[[
 local test={"Ω","☆","🍎"}
 for k=1,#test do
@@ -216,6 +219,8 @@ for k=1,#test do
  end
 end
 -- ]]
+
+
 --[[
  Ω ☆ 🍎
  ↑ ↓ → ←
