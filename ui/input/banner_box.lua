@@ -3,11 +3,11 @@ function UIBox_BannerFunc(box)
  local menus={
   (function()
   dropDownWindow(
-   { {l.syntax,"",syntaxIcons[syntaxUsed],banner_Write_Syntax},
-     {l.wordWrap,"",14,banner_Write_WordWrap},
-     {l.showSpacing,"",14,banner_Write_ShowSpacing},
-     {l.textLine,"",9,banner_TextLine},
-     {l.cursorAnimation,tostring(typeTCursor),9,banner_CursorAnimation},
+   { {l.syntax,"",syntaxIcons[syntaxUsed],banner_Write_Syntax,"syntax"},
+     {l.wordWrap,"",14,banner_Write_WordWrap,l.wordWrapMini..getBoolString(doWordWrap)},
+     {l.showSpacing,"",14,banner_Write_ShowSpacing,l.showSpacingMini..getBoolString(doShowSpacing)},
+     {l.textLine,"",9,banner_TextLine,              l.textLineMini..getBoolString(doLineBannerSlec)},
+     {l.cursorAnimation,"",9,banner_CursorAnimation,l.cursorAnimation..typeTCursor},
    },
    {UIBox_Banner_GetStretch,box,74})
   end),
@@ -22,7 +22,8 @@ function UIBox_BannerFunc(box)
   
   (function()
   dropDownWindow(
-   { {l.openFolder,"",11,banner_Open_Folder},
+   { {l.openFolder,"",11,{banner_Open_Folder,{box}},l.openFolderMini },
+     {l.showHidden,"",11,banner_ShowFolderItems,l.showHiddenMini..getBoolString(showHiddenFiles)},
      {l.save,"Cmd S",13},
      {l.newFile,"Cmd N",9}
    },
@@ -104,10 +105,12 @@ end
 
 
 doPrompt=false
+doQuitPrompt=false
 function banner_Quit()
  state=1
  doPrompt=true
  doWrite=false
+ doQuitPrompt=true
  
  local anwsers={l.promptYes,l.promptNo}
  math.randomseed(os.time())
@@ -119,11 +122,11 @@ function banner_Quit()
  
  PromptMenu=(function()
   dropDownWindow(
-   { {l.quitProgram[1],"",nil,dummyPromptChoice,true},
-     {l.quitProgram[2],"",nil,dummyPromptChoice,true},
-     {l.quitProgram[3],"",nil,dummyPromptChoice,true},
+   { {l.quitProgram[1],"",nil,dummyPromptChoice,"",true},
+     {l.quitProgram[2],"",nil,dummyPromptChoice,"",true},
+     {l.quitProgram[3],"",nil,dummyPromptChoice,"",true},
      {anwsers[1],"",6,(function() doQuit=false love.event.quit() end)},
-     {anwsers[2],"",7, (function() doPrompt=false state=0 end)}
+     {anwsers[2],"",7, (function() doQuitPrompt=false doPrompt=false state=0 end)}
    },
    {quitGetStretch,box,-61,bannerMargin+4})
   end)

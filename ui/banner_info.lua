@@ -12,6 +12,10 @@ function bannerDescript()
    str=bannerDescript_DropDown1()
   end
   
+  if doDropDown==3 then
+   str=bannerDescript_DropDown3()
+  end
+  
  end
  
  
@@ -37,6 +41,25 @@ end
 
 function bannerDescript_DropDown1()
  local names={"txt ","md  ","lua "}
- local b1,b2,b3=getChar(doWordWrap,1),getChar(doShowSpacing,1),getChar(doLineBannerSlec,1)
- return names[syntaxUsed+1].."wrp_"..b1.." shw_"..b2.." lin_"..b3--" csr"..typeTCursor
+ 
+ if mouse.hover=="syntax" then
+  return l.syntax..names[syntaxUsed+1]
+ end
+ 
+ if tostring(mouse.hover)=="true" then
+  mouse.hover=""
+ end
+ 
+ return mouse.hover or ""
 end
+
+
+function bannerDescript_DropDown3()
+ 
+ if tostring(mouse.hover)=="true" then
+  mouse.hover=""
+ end
+ 
+ return mouse.hover or ""
+end
+

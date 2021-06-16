@@ -29,7 +29,7 @@ function love.keypressed(key)
  keys[key]=true
  keyPresses[key]=true
  
- if key=="escape" then banner_Quit() end
+ if key=="escape" and not doQuitPrompt then banner_Quit() end
 end
 function love.keyreleased(key)
  keys[key]=nil
@@ -67,6 +67,7 @@ mouse={
  wheelCoolDown=0,
  click={},
  
+ 
  hover=false,
  action=false
 }
@@ -97,7 +98,6 @@ function trackMouse()
  if love.mouse.isDown(2) and mouse.coolDown==0 then
   mouse.click[2]=true mouse.coolDown=15
  end
- 
  
 end
 

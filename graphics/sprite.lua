@@ -13,34 +13,9 @@ end
 
 
 
-spriteTable={
- 
- -- title
- newSprite(0,0),
- newSprite(8,0),
- newSprite(16,0),
- newSprite(24,0),
- newSprite(32,0),
- 
- -- prompt
- newSprite(40,0),
- newSprite(48,0),
- 
- -- empty
- newSprite(56,0),
- 
- -- banner icons
- newSprite(0,8),
- newSprite(8,8),
- newSprite(16,8),
- newSprite(24,8),
- 
- -- banner's menu icons
- newSprite(32,8),
- newSprite(40,8),
- newSprite(48,8),
- newSprite(56,8),
- 
- newSprite(0,16),
- newSprite(8,16)
-}
+spriteTable={}
+for i=0,63 do
+ spriteTable[i+1]= newSprite( (i%8)*8, floor(i/8)*8 )
+end
+
+

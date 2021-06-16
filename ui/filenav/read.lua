@@ -1,8 +1,16 @@
 
 
-function pasteContents()
+
+
+
+
+
+function fileReadContents(contents)
  
- local contents = love.system.getClipboardText()
+ contents = contents or "file empty?"
+ print(contents)
+ 
+ 
  local str = utf8.dump( contents )
  
  local paste={}
@@ -21,15 +29,16 @@ function pasteContents()
   local r="\17"
   if flag then r=c end
   paste[#paste+1]=r
-  
  end
  
  
  
  writeUpdate=true
+ writeCursor=0
+ textTable={}
  for i=1,#paste do
-  local c=paste[i]
+  --print(paste[i])
   writeCursor=writeCursor+1
-  textTable=addTo_Table(textTable,writeCursor,c)
+  textTable=addTo_Table(textTable,writeCursor,paste[i])
  end
 end

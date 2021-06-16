@@ -46,3 +46,5 @@ require(path.."main")
 
 path="ui/filenav/"
 require(path.."iohelp")
+require(path.."file_types")
+require(path.."read")

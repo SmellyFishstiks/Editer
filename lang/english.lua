@@ -1,21 +1,27 @@
 english={
  
+ bool_True ="true",
+ bool_False="false",
+ 
  cursorPos ="pos ",
  cursorLine="lin ",
  
- syntax         ="Syntax",
+ syntax         ="Syntax ",
  wordWrap       ="Word wrap",
- wordWrapMini   ="wrp_",
+ wordWrapMini   ="Wrap ",
  showSpacing    ="Show spacing",
- showSpacingMini="shw_",
+ showSpacingMini="Spacing ",
  textLine       ="Show lines",
- textLineMini   ="lin_",
+ textLineMini   ="Lines ",
  cursorAnimation="Cursor ani",
  
  runProject    ="Run project",
  toggleDebugger="Toggle debugger",
  
  openFolder="Open filenav",
+ openFolderMini="Open files",
+ showHidden="Show hidden",
+ showHiddenMini="Show all files ",
  save      ="Save",
  newFile   ="New file",
  

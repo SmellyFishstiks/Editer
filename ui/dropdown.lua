@@ -48,13 +48,21 @@ function dropDownWindow(items,x,y)
   
   if y<bannerMargin and state==0 then goto _ end
   
-  mouse.hover=true mouseAnimation()
+  
+  
   n=floor( (mouse.pos[2]-y-2)/10 +1 )
   n=min(#items, max(1,n))
   
+  mouse.hover=items[n][5] or "" mouseAnimation()
+  
   if mouse.click[1] then
    mouse.action=true
-   items[n][4]()
+   local a,func=nil,items[n][4]
+   if type(func)=="table" then
+    a=func[2]
+    func=func[1]
+   end
+   func(a)
   end
   ::_::
  end
@@ -82,7 +90,7 @@ function dropDownWindow(items,x,y)
   local str=items[i][1]
   if items[i][2]~="" then str=str.." ("..items[i][2]..")" end
   
-  text(str, x+12+g, y+i*hr-hr+5,"normal",false,items[i][5])
+  text(str, x+12+g, y+i*hr-hr+5,"normal",false,items[i][6])
  end
  
 end

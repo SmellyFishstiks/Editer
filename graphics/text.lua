@@ -16,7 +16,7 @@ end
 unicodeSheet=love.graphics.newImage("unicodesheet.png")
 function newUnicode(i)
  local sw,sh=unicodeSheet:getDimensions()
- local x,y=i%8,floor(i/8)
+ local x,y=i%10,floor(i/10)
  
  local q=love.graphics.newQuad(x*8,y*6,8,6, sw,sh)
  return q
@@ -44,7 +44,13 @@ unicodeIDs={
  -- star
  937,
  -- apple
- 127822
+ 127822,
+ -- delta triangle
+ 8710,
+ -- box
+ 9744,
+ -- circle
+ 9711
 }
 
 for i=1, #unicodeIDs do
@@ -66,11 +72,22 @@ end
 
 
 function getChar(v,i)
-
  return utf8.dump(tostring(v))[i]
-
 end
 
+function getBoolChar(bool,i)
+ 
+ local s=l.bool_False
+ if bool then s=l.bool_True end
+ return getChar(s,i)
+end
+
+function getBoolString(bool)
+ 
+ local s=l.bool_False
+ if bool then s=l.bool_True end
+ return s
+end
 
 
 
@@ -200,7 +217,7 @@ function utf8.ord(c)
 end
 
 --[[
-local test={"Ω","☆","🍎"}
+local test={"Ω","☆","🍎","∆","☐","◯"}
 for k=1,#test do
  
  local t={}
@@ -224,4 +241,5 @@ end
 --[[
  Ω ☆ 🍎
  ↑ ↓ → ←
+ ∆ ☐ ◯
 ]]
