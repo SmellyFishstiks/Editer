@@ -6,9 +6,18 @@ function drawText()
  end
  
  local r=#tostring((#textLineMem))
- textCursor={0, bannerMargin+2, lineBannerMargin*r+2, 0}
+ textCursor={0, bannerMargin+2, lineBannerMargin*r+2, 0,0}
+ 
+ local l=0
+ for i=0,#textTable do
+  if textTable[i]=="\10" then
+   l=l+1
+  end
+ end
  
  for i=0,#textTable do
+  
+  if l>500 then error("file is too big, need to fix lag problem with camera or something.. :<") end
   
   if i~=0 then
    
@@ -16,6 +25,7 @@ function drawText()
    
    if mode=="shake" then shake=i mode="normal" end
    setColor(color)
+   
    text(textTable[i], nil, nil, mode, doShowSpacing, shake, doWordWrap)
   end
   
@@ -29,6 +39,7 @@ function drawText()
  if lineBannerMargin~=0 then
   drawTextLines()
  end
+ 
 end
 
 
@@ -59,17 +70,31 @@ function drawTextCursor()
   end
   text(typeAnimation[typeTCursor][a])
  end
-
+ 
 end
 
 
+
+function getDrawTextCursorLine()
+ local c,l=0,0
+ for i=1,writeCursor do
+  c=c+1
+  if textTable[i]=="\10" then
+   l=l+1
+   c=0
+  end
+ end
+ 
+ return l,c
+ 
+end
 
 
 
 lineBannerMargin=0
 textLineMem={}
 function drawTextLines()
- 
+ local cursorOffset=0
  local b=bannerMargin
  
  local d,dx,h,str = 0, 0, 8, ""
@@ -87,7 +112,12 @@ function drawTextLines()
    textLineMem[#textLineMem][3]=8
    h=8
   end
-  if doWordWrap and dx>getWindowSize()*2-(lineBannerMargin+6) then
+  
+  
+  --if i==writeCursor then cursorOffset=6 end
+  
+  local r=#tostring((#textLineMem))
+  if doWordWrap and dx>getWindowSize()*2-(lineBannerMargin*r+cursorOffset+9) then
    h,d,dx = h+8, d+8, 0
    
    textLineMem[#textLineMem][3]=h
@@ -95,18 +125,22 @@ function drawTextLines()
   
  end
  
-
-
- local l=1
- for i=1,writeCursor do
-  if textTable[i]=="\10" then
-   l=l+1
-  end
- end
  
+ 
+ 
+ local l=getDrawTextCursorLine()+1
  local r=#tostring((#textLineMem))
  local p=0
+ 
+ local _,wy=getWindowSize()
+ wy=wy*2-14
  for i=1,#textLineMem do
+  
+  -- quit if offscreen
+  if textLineMem[i] and wy<bannerMargin+textLineMem[i][2] then
+   break
+  end
+  
   
   setColor(pageIDTable[pageID][2])
   
@@ -119,6 +153,12 @@ function drawTextLines()
  
  setColor("ffffff")
  for i=1,#textLineMem do
+  
+  if textLineMem[i] and wy<bannerMargin+textLineMem[i][2] then
+   --print(i)
+   break
+  end
+  
   local a=1
   if l==i and doWrite then a=2 end
   text(textLineMem[i][1],0,textLineMem[i][2]+a+bannerMargin)

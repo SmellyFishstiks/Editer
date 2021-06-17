@@ -6,9 +6,8 @@
 
 
 function fileReadContents(contents)
- 
  contents = contents or "file empty?"
- print(contents)
+ --print(contents)
  
  
  local str = utf8.dump( contents )

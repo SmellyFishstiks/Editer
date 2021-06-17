@@ -4,6 +4,7 @@ function banner_Open_Folder(arg)
  doPrompt=true
  doDropDown=false
  mouse.click[1]=false
+ promptExit=true
  
  -- directory stuff
  local directory=io.home().."/directoryTest"

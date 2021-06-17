@@ -1,6 +1,6 @@
 
 
-
+promptExit=false
 function promptScreen()
  PromptMenu()
 end

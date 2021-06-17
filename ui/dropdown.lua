@@ -56,6 +56,7 @@ function dropDownWindow(items,x,y)
   mouse.hover=items[n][5] or "" mouseAnimation()
   
   if mouse.click[1] then
+   
    mouse.action=true
    local a,func=nil,items[n][4]
    if type(func)=="table" then

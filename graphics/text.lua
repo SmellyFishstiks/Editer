@@ -90,13 +90,14 @@ function getBoolString(bool)
 end
 
 
-
-textCursor={0,0,0,0}
+-- 5 used for absolute x pos
+textCursor={0,0,0,0, 0}
 function text(str,x,y,mode,ifShow,ifShake,ifWrap)
+ 
  str=tostring(str)
  str=utf8.dump(str)
  
- 
+ local cursorOffset=0
  
  mode=mode or "normal"
  
@@ -115,51 +116,64 @@ function text(str,x,y,mode,ifShow,ifShake,ifWrap)
   end
   
   
-  
+  -- drawing
   c=utf8.ord(str[i])--string.byte(str[i])
   if (c>127 or c<0) and not unicodeCheck(c) then c=63 end
   
+  local wx,wy=getWindowSize()
+  local drawFlag=true
+  if textCursor[1] >wx*2 or textCursor[2] >wy*2 then drawFlag=false end
   -- draw to canvas
-  love.graphics.push()
-   fontDummyCanvas:renderTo(function()
-    love.graphics.clear()
-    love.graphics.scale(2)
-    local sheet,b=fontSheet,0
-    if c>127 then sheet,b=unicodeSheet,4 end
-    
-    love.graphics.draw(sheet, font[c], 0,0)
-   end)
-  love.graphics.pop()
-   
-   love.graphics.push()
-   fontCanvas:renderTo(function()
-    love.graphics.clear()
-    love.graphics.scale(2)
-    local r=0
-    if mode=="italic" then r=0.075 end
-    
-    local sheet,b=fontSheet,0
-    if c>127 then sheet,b=unicodeSheet,4 end
-    
-    love.graphics.draw(fontDummyCanvas, 6-b,6,r)
-    
-    if c>127 then textCursor[1]=textCursor[1]+3 end
-    
-   end)
-  love.graphics.pop()
+  local sheet,b=fontSheet,0
+  if c>127 then sheet,b=unicodeSheet,4 textCursor[1]=textCursor[1]+3 end
   
-  if not showCheck(c) or ifShow then
+  if drawFlag then
+   love.graphics.push()
+    fontDummyCanvas:renderTo(function()
+     love.graphics.clear()
+     love.graphics.scale(2)
+     
+     
+     
+     love.graphics.draw(sheet, font[c], 0,0)
+    end)
+   love.graphics.pop()
+  end
+  
+  if drawFlag then
+   love.graphics.push()
+    fontCanvas:renderTo(function()
+      
+      love.graphics.clear()
+      love.graphics.scale(2)
+      local r=0
+      if mode=="italic" then r=0.075 end
+      
+      
+      love.graphics.draw(fontDummyCanvas, 6-b,6,r)
+     
+    end)
+   love.graphics.pop()
+  end
+  
+  if drawFlag and (not showCheck(c) or ifShow) then
    love.graphics.draw(fontCanvas, textCursor[1]-6+textCursor[3], textCursor[2]-6+y+textCursor[4])
   end
   
   textCursor[1]=textCursor[1]+6
+  textCursor[5]=textCursor[5]+1
   
+  local textCursorY,textCursorX=getDrawTextCursorLine()
+  if textCursor[5]==textCursorX and (textCursor[2]-14)/8 == textCursorY then cursorOffset=6 end
   
   local r=#tostring((#textLineMem))
-  local xd=getWindowSize()*2-(lineBannerMargin*r+6)
+  
+  local xd=getWindowSize()*2-(lineBannerMargin*r+9+cursorOffset)
   if c==10 or (ifWrap and textCursor[1]>xd) then
    textCursor[1]=x or 0
+   textCursor[5]=0
    textCursor[2]=textCursor[2]+8
+   cursorOffset=0
   end
   
   

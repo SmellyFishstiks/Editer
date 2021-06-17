@@ -124,9 +124,18 @@ function mouseAnimation()
  local x,y=bannerGetStretch()
  y=144+y*2-bannerMargin
  if mouse.pos[2]>bannerMargin and mouse.pos[2]<y and 
-    state==0 and not mouse.hover and not mouse.action then
+    (state==0 or promptExit) and not mouse.hover and not mouse.action then
   ani="ibeam"
-  if mouse.click[1] then doWrite=true end
+  if mouse.click[1] then
+   doWrite=true
+   
+   if promptExit then
+    promptExit=false
+    doPrompt=false
+    state=0
+   end
+   
+  end
  else
   if mouse.click[1] then doWrite=false end
  end

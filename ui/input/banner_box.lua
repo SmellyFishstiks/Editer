@@ -108,6 +108,7 @@ doPrompt=false
 doQuitPrompt=false
 function banner_Quit()
  state=1
+ promptExit=false
  doPrompt=true
  doWrite=false
  doQuitPrompt=true
